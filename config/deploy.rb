@@ -42,7 +42,7 @@ task :upload_database_yml => 'config/database.yml' do |f|
   on roles(:all) do
     upload!(f.prerequisites.first, "#{release_path}/config/database.yml")
   end
-
+end
 namespace :deploy do
 
   desc 'Restart application'
