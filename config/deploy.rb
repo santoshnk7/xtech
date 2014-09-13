@@ -1,14 +1,14 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-set :application, 'my_app_name'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :application, 'xtech'
+set :repo_url, 'git@github.com:santoshnk7/xtech'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app
-# set :deploy_to, '/var/www/my_app'
+ set :deploy_to, '/var/www/xtech'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -33,6 +33,15 @@ set :repo_url, 'git@example.com:me/my_repo.git'
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
+
+set :rvm_ruby_version, '1.9.3@xtech'
+set :rails_env, 'production'
+
+desc "Uploads database.yml to server."
+task :upload_database_yml => 'config/database.yml' do |f|
+  on roles(:all) do
+    upload!(f.prerequisites.first, "#{release_path}/config/database.yml")
+  end
 
 namespace :deploy do
 
